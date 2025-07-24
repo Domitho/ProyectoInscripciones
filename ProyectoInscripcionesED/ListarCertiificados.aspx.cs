@@ -101,6 +101,12 @@ namespace ProyectoInscripcionesED
                 }
             }
         }
+        protected void btnAgregarCertificado_Click(object sender, EventArgs e)
+        {
+            // Aquí puedes redirigir a la página de agregar un nuevo certificado, por ejemplo:
+            Response.Redirect("AgregarCertificado.aspx");
+        }
+
 
     }
 }

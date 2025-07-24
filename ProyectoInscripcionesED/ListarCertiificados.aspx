@@ -6,6 +6,9 @@
     <asp:Label ID="lblMensaje" runat="server" ForeColor="Green"></asp:Label><br />
 
     <form id="formListaCertificados" runat="server">
+        <!-- Botón para agregar nuevo certificado -->
+        <asp:Button ID="btnAgregarCertificado" runat="server" Text="Agregar Certificado" CssClass="btn btn-success mb-3" OnClick="btnAgregarCertificado_Click" />
+
         <!-- GridView para mostrar los certificados -->
         <asp:GridView ID="gvCertificados" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered" OnRowCommand="gvCertificados_RowCommand">
             <Columns>
@@ -15,9 +18,7 @@
                 
                 <asp:TemplateField HeaderText="Acciones">
                     <ItemTemplate>
-                        <!-- Ver Detalles -->
-                        <asp:LinkButton ID="btnDetalles" runat="server" CommandName="Detalles" CommandArgument='<%# Eval("id") %>' Text="Ver Detalles" CssClass="btn btn-info btn-sm" />
-                        
+
                         &nbsp; <!-- Espaciado entre botones -->
                         
                         <!-- Editar -->

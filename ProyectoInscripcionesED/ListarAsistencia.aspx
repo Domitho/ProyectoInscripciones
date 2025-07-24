@@ -6,6 +6,7 @@
     <asp:Label ID="lblMensaje" runat="server" ForeColor="Green"></asp:Label><br />
 
     <form id="formListaAsistencia" runat="server">
+
         <!-- GridView para mostrar las asistencias -->
         <asp:GridView ID="gvAsistencia" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered" OnRowCommand="gvAsistencia_RowCommand">
             <Columns>
@@ -15,8 +16,7 @@
                 <asp:BoundField DataField="asistio" HeaderText="Asistió" SortExpression="asistio" />
                 <asp:TemplateField HeaderText="Acciones">
                     <ItemTemplate>
-                        <!-- Ver Detalles -->
-                        <asp:LinkButton ID="btnDetalles" runat="server" CommandName="Detalles" CommandArgument='<%# Eval("id") %>' Text="Ver Detalles" CssClass="btn btn-info btn-sm" />
+                        
                         &nbsp; <!-- Espaciado entre botones -->
                         <!-- Marcar Asistencia -->
                         <asp:LinkButton ID="btnMarcarAsistencia" runat="server" CommandName="MarcarAsistencia" CommandArgument='<%# Eval("id") %>' Text="Marcar Asistencia" CssClass="btn btn-success btn-sm" />

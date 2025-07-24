@@ -110,13 +110,13 @@ namespace ProyectoInscripcionesED
                 // 10. Tasa de Cancelación de Talleres
                 string sqlTasaCancelacion = @"
                     SELECT 
-                        (COUNT(CASE WHEN t.fecha_fin <= CURRENT_DATE THEN 1 END) / COUNT(t.id)) * 100 AS TasaCancelacion
+                        (COUNT(CASE WHEN t.hora_fin <= CURRENT_TIME AND t.fecha <= CURRENT_DATE THEN 1 END) / COUNT(t.id)) * 100 AS TasaCancelacion
                     FROM taller t";
                 using (NpgsqlCommand cmd = new NpgsqlCommand(sqlTasaCancelacion, conn))
                 {
                     var result = cmd.ExecuteScalar();
                     decimal tasaCancelacion = result != DBNull.Value ? Convert.ToDecimal(result) : 0;
-                    lblTasaCancelacion.Text = tasaCancelacion.ToString("0.00");
+                    lblTasaCancelacion.Text = tasaCancelacion.ToString("0.00");  // Formateado con 2 decimales
                 }
             }
         }

@@ -96,5 +96,11 @@ namespace ProyectoInscripcionesED
                 }
             }
         }
+        protected void btnAgregar_Click(object sender, EventArgs e)
+        {
+            // Aquí puedes redirigir a una página para agregar una nueva inscripción, por ejemplo:
+            Response.Redirect("AgregarInscripcion.aspx");
+        }
+
     }
 }

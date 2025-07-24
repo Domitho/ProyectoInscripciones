@@ -3,8 +3,13 @@
     <h2>Listado de Talleres</h2>
 
     <form id="formListarTalleres" runat="server">
+        <!-- Label para mostrar mensajes de éxito o error -->
         <asp:Label ID="lblMensaje" runat="server" ForeColor="Green"></asp:Label>
 
+        <!-- Botón para agregar un nuevo taller -->
+        <asp:Button ID="btnAgregarTaller" runat="server" Text="Agregar Taller" CssClass="btn btn-success mb-3" OnClick="btnAgregarTaller_Click" />
+
+        <!-- GridView para mostrar los talleres -->
         <asp:GridView ID="gvTalleres" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered" OnRowCommand="gvTalleres_RowCommand">
             <Columns>
                 <asp:BoundField DataField="id" HeaderText="ID" SortExpression="id" />

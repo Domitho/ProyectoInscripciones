@@ -12,6 +12,7 @@
                     <p class="card-text">
                         <strong><asp:Label ID="lblTotalUsuarios" runat="server" Text="0"></asp:Label></strong>
                     </p>
+                    <canvas id="chartTotalUsuarios" width="400" height="200"></canvas>
                 </div>
             </div>
         </div>
@@ -24,6 +25,7 @@
                     <p class="card-text">
                         <strong><asp:Label ID="lblUsuariosActivos" runat="server" Text="0"></asp:Label></strong>
                     </p>
+                    <canvas id="chartUsuariosActivos" width="400" height="200"></canvas>
                 </div>
             </div>
         </div>
@@ -36,6 +38,7 @@
                     <p class="card-text">
                         <strong><asp:Label ID="lblTasaConversion" runat="server" Text="0.00"></asp:Label> %</strong>
                     </p>
+                    <canvas id="chartTasaConversion" width="400" height="200"></canvas>
                 </div>
             </div>
         </div>
@@ -50,6 +53,7 @@
                     <p class="card-text">
                         <strong><asp:Label ID="lblTotalInscripciones" runat="server" Text="0"></asp:Label></strong>
                     </p>
+                    <canvas id="chartTotalInscripciones" width="400" height="200"></canvas>
                 </div>
             </div>
         </div>
@@ -62,6 +66,7 @@
                     <p class="card-text">
                         <strong><asp:Label ID="lblTasaAsistenciaPromedio" runat="server" Text="0.00"></asp:Label> %</strong>
                     </p>
+                    <canvas id="chartTasaAsistenciaPromedio" width="400" height="200"></canvas>
                 </div>
             </div>
         </div>
@@ -74,6 +79,7 @@
                     <p class="card-text">
                         <strong><asp:Label ID="lblTasaCertificacion" runat="server" Text="0.00"></asp:Label> %</strong>
                     </p>
+                    <canvas id="chartTasaCertificacion" width="400" height="200"></canvas>
                 </div>
             </div>
         </div>
@@ -88,6 +94,7 @@
                     <p class="card-text">
                         <strong><asp:Label ID="lblTalleresRealizados" runat="server" Text="0"></asp:Label></strong>
                     </p>
+                    <canvas id="chartTalleresRealizados" width="400" height="200"></canvas>
                 </div>
             </div>
         </div>
@@ -100,6 +107,7 @@
                     <p class="card-text">
                         <strong><asp:Label ID="lblCertificadosEmitidos" runat="server" Text="0"></asp:Label></strong>
                     </p>
+                    <canvas id="chartCertificadosEmitidos" width="400" height="200"></canvas>
                 </div>
             </div>
         </div>
@@ -112,6 +120,7 @@
                     <p class="card-text">
                         <strong><asp:Label ID="lblTiempoPromedioAsistencia" runat="server" Text="0.00"></asp:Label> horas</strong>
                     </p>
+                    <canvas id="chartTiempoPromedioAsistencia" width="400" height="200"></canvas>
                 </div>
             </div>
         </div>
@@ -126,8 +135,10 @@
                     <p class="card-text">
                         <strong><asp:Label ID="lblTasaCancelacion" runat="server" Text="0.00"></asp:Label> %</strong>
                     </p>
+                    <canvas id="chartTasaCancelacion" width="400" height="200"></canvas>
                 </div>
             </div>
         </div>
     </div>
+
 </asp:Content>

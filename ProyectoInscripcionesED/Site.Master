@@ -6,61 +6,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario de Inscripción</title>
-
-    <!-- Enlace a Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Enlace a Bootstrap Icons (si se quiere usar iconos de Bootstrap 5) -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
-        .pagination-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 20px;
+        .navbar {
+            background-color: #007bff; /* Color de fondo del navbar */
         }
-
-        .pagination-container .btn {
-            margin: 0 5px;
+        .navbar-brand, .nav-link {
+            color: white !important; /* Color del texto */
         }
-
+        .nav-link:hover {
+            color: #ffc107 !important; /* Color al pasar el mouse */
+        }
+        .navbar-toggler {
+            border-color: rgba(255, 255, 255, 0.5); /* Color del borde del botón */
+        }
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(255, 255, 255, 0.5)' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E"); /* Icono del botón */
+        }
     </style>
-    
 </head>
 <body>
     <div class="container">
         <header>
-            <h1 class="my-4">Sistema de Inscripciones</h1>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="Index.aspx">Inicio</a>
+            <nav class="navbar navbar-expand-lg">
+                <a class="navbar-brand" href="/">Inicio</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <!-- Link para Usuarios -->
+                    <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a class="nav-link" href="Usuario.aspx">Usuarios</a>
+                            <a class="nav-link" href="Usuario.aspx"><i class="fas fa-users"></i> Usuarios</a>
                         </li>
-
-                        <!-- Link para Contacto -->
                         <li class="nav-item">
-                            <a class="nav-link <%# Request.Url.AbsolutePath.Contains("Contacto.aspx") ? "active" : "" %>" href="Contacto.aspx">Contacto</a>
+                            <a class="nav-link" href="ListarCertiificados.aspx"><i class="fas fa-certificate"></i> Certificados</a>
                         </li>
-
-                        <!-- Link para Certificados -->
                         <li class="nav-item">
-                            <a class="nav-link <%# Request.Url.AbsolutePath.Contains("ListarCertificados.aspx") ? "active" : "" %>" href="ListarCertificados.aspx">Certificados</a>
+                            <a class="nav-link" href="ListarTaller.aspx"><i class="fas fa-chalkboard-teacher"></i> Talleres</a>
                         </li>
-
-                        <!-- Link para Talleres -->
                         <li class="nav-item">
-                            <a class="nav-link <%# Request.Url.AbsolutePath.Contains("ListarTalleres.aspx") ? "active" : "" %>" href="ListarTalleres.aspx">Talleres</a>
+                            <a class="nav-link" href="ListarAsistencia.aspx"><i class="fas fa-check-circle"></i> Asistencia</a>
                         </li>
-
-                        <!-- Link para Asistencia -->
                         <li class="nav-item">
-                            <a class="nav-link <%# Request.Url.AbsolutePath.Contains("ListarAsistencia.aspx") ? "active" : "" %>" href="ListarAsistencia.aspx">Asistencia</a>
+                            <a class="nav-link" href="ListarCursos.aspx"><i class="fas fa-book"></i> Cursos</a>
                         </li>
                     </ul>
                 </div>
@@ -76,8 +65,7 @@
         <p>&copy; 2025 Sistema de Inscripciones</p>
     </footer>
 
-    <!-- Enlace a Bootstrap 5 JavaScript (popper.js y bootstrap.js) -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"></script>
 </body>
 </html>

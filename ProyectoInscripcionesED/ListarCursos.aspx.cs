@@ -109,6 +109,11 @@ namespace ProyectoInscripcionesED
                 }
             }
         }
+        protected void btnAgregarCurso_Click(object sender, EventArgs e)
+        {
+            // Aquí puedes redirigir a la página para agregar un nuevo curso, por ejemplo:
+            Response.Redirect("AgregarCurso.aspx");
+        }
 
     }
 }

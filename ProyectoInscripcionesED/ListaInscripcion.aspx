@@ -6,6 +6,9 @@
         <!-- Label para mostrar los mensajes -->
         <asp:Label ID="lblMensaje" runat="server" ForeColor="Green"></asp:Label><br />
 
+        <!-- Botón para agregar nueva inscripción -->
+        <asp:Button ID="btnAgregar" runat="server" Text="Agregar Inscripción" CssClass="btn btn-success mb-3" OnClick="btnAgregar_Click" />
+
         <!-- GridView para mostrar las inscripciones -->
         <asp:GridView ID="gvInscripciones" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered" OnRowCommand="gvInscripciones_RowCommand">
             <Columns>

@@ -93,5 +93,11 @@ namespace ProyectoInscripcionesED
                 }
             }
         }
+        protected void btnAgregarTaller_Click(object sender, EventArgs e)
+        {
+            // Aquí puedes redirigir a la página para agregar un nuevo taller, por ejemplo:
+            Response.Redirect("AgregarTaller.aspx");
+        }
+
     }
 }
