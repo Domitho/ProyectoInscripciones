@@ -166,6 +166,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="ListaInscripcion.aspx" />
+    <Content Include="ListarAsistencia.aspx" />
     <Content Include="ListarCertiificados.aspx" />
     <Content Include="ListarCursos.aspx" />
     <Content Include="ListarTaller.aspx" />
@@ -302,6 +303,13 @@
     </Compile>
     <Compile Include="ListaInscripcion.aspx.designer.cs">
       <DependentUpon>ListaInscripcion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ListarAsistencia.aspx.cs">
+      <DependentUpon>ListarAsistencia.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListarAsistencia.aspx.designer.cs">
+      <DependentUpon>ListarAsistencia.aspx</DependentUpon>
     </Compile>
     <Compile Include="ListarCertiificados.aspx.cs">
       <DependentUpon>ListarCertiificados.aspx</DependentUpon>
