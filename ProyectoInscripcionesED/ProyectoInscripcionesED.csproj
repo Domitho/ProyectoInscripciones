@@ -137,6 +137,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
+    <Content Include="AgregarCurso.aspx" />
+    <Content Include="AgregarTaller.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
@@ -144,6 +146,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
+    <Content Include="EditarCurso.aspx" />
+    <Content Include="EditarTaller.aspx" />
     <Content Include="EditarUsuario.aspx" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -157,6 +161,9 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
+    <Content Include="ListaInscripcion.aspx" />
+    <Content Include="ListarCursos.aspx" />
+    <Content Include="ListarTaller.aspx" />
     <Content Include="ListarUsuario.aspx" />
     <Content Include="Prueba.aspx" />
     <Content Include="Scripts\bootstrap.js" />
@@ -195,6 +202,20 @@
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AgregarCurso.aspx.cs">
+      <DependentUpon>AgregarCurso.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AgregarCurso.aspx.designer.cs">
+      <DependentUpon>AgregarCurso.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AgregarTaller.aspx.cs">
+      <DependentUpon>AgregarTaller.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AgregarTaller.aspx.designer.cs">
+      <DependentUpon>AgregarTaller.aspx</DependentUpon>
+    </Compile>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="About.aspx.cs">
       <DependentUpon>About.aspx</DependentUpon>
@@ -218,6 +239,20 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="EditarCurso.aspx.cs">
+      <DependentUpon>EditarCurso.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditarCurso.aspx.designer.cs">
+      <DependentUpon>EditarCurso.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditarTaller.aspx.cs">
+      <DependentUpon>EditarTaller.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditarTaller.aspx.designer.cs">
+      <DependentUpon>EditarTaller.aspx</DependentUpon>
+    </Compile>
     <Compile Include="EditarUsuario.aspx.cs">
       <DependentUpon>EditarUsuario.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -227,6 +262,27 @@
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="ListaInscripcion.aspx.cs">
+      <DependentUpon>ListaInscripcion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListaInscripcion.aspx.designer.cs">
+      <DependentUpon>ListaInscripcion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ListarCursos.aspx.cs">
+      <DependentUpon>ListarCursos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListarCursos.aspx.designer.cs">
+      <DependentUpon>ListarCursos.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ListarTaller.aspx.cs">
+      <DependentUpon>ListarTaller.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListarTaller.aspx.designer.cs">
+      <DependentUpon>ListarTaller.aspx</DependentUpon>
     </Compile>
     <Compile Include="ListarUsuario.aspx.cs">
       <DependentUpon>ListarUsuario.aspx</DependentUpon>
