@@ -30,9 +30,7 @@
                         <!-- Botón Eliminar -->
                         <asp:LinkButton ID="btnEliminar" runat="server" CommandName="Eliminar" CommandArgument='<%# Eval("id") %>' Text="Eliminar" CssClass="btn btn-danger btn-sm" OnClientClick="return confirm('¿Estás seguro de que quieres eliminar este taller?');" />
                         &nbsp;
-                        <!-- Botón Ver Detalles -->
-                        <asp:LinkButton ID="btnDetalles" runat="server" CommandName="Detalles" CommandArgument='<%# Eval("id") %>' Text="Ver Detalles" CssClass="btn btn-info btn-sm" />
-                    </ItemTemplate>
+                       </ItemTemplate>
                 </asp:TemplateField>
             </Columns>
         </asp:GridView>
