@@ -19,18 +19,27 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
+                        <!-- Link para Usuarios -->
                         <li class="nav-item">
-                            <a class="nav-link <%# Request.Url.AbsolutePath.Contains("Usuarios.aspx") ? "active" : "" %>" href="Usuarios.aspx">Usuarios</a>
+                            <a class="nav-link" href="Usuario.aspx">Usuarios</a>
                         </li>
+
+                        <!-- Link para Contacto -->
                         <li class="nav-item">
                             <a class="nav-link <%# Request.Url.AbsolutePath.Contains("Contacto.aspx") ? "active" : "" %>" href="Contacto.aspx">Contacto</a>
                         </li>
+
+                        <!-- Link para Certificados -->
                         <li class="nav-item">
                             <a class="nav-link <%# Request.Url.AbsolutePath.Contains("ListarCertificados.aspx") ? "active" : "" %>" href="ListarCertificados.aspx">Certificados</a>
                         </li>
+
+                        <!-- Link para Talleres -->
                         <li class="nav-item">
                             <a class="nav-link <%# Request.Url.AbsolutePath.Contains("ListarTalleres.aspx") ? "active" : "" %>" href="ListarTalleres.aspx">Talleres</a>
                         </li>
+
+                        <!-- Link para Asistencia -->
                         <li class="nav-item">
                             <a class="nav-link <%# Request.Url.AbsolutePath.Contains("ListarAsistencia.aspx") ? "active" : "" %>" href="ListarAsistencia.aspx">Asistencia</a>
                         </li>
