@@ -12,6 +12,20 @@
 
     <!-- Enlace a Bootstrap Icons (si se quiere usar iconos de Bootstrap 5) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination-container .btn {
+            margin: 0 5px;
+        }
+
+    </style>
+    
 </head>
 <body>
     <div class="container">
