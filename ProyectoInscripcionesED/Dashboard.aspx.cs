@@ -24,7 +24,7 @@ namespace ProyectoInscripcionesED
                 conn.Open();
 
                 // 1. Total de Usuarios Registrados
-                string sqlTotalUsuarios = "SELECT COUNT(DISTINCT id) FROM usuario";
+                string sqlTotalUsuarios = "SELECT COUNT(id) FROM usuario";
                 using (NpgsqlCommand cmd = new NpgsqlCommand(sqlTotalUsuarios, conn))
                 {
                     var result = cmd.ExecuteScalar();
