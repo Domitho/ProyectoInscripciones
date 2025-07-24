@@ -16,9 +16,6 @@
                 
                 <asp:TemplateField HeaderText="Acciones">
                     <ItemTemplate>
-                        <!-- Ver Detalles -->
-                        <asp:LinkButton ID="btnDetalles" runat="server" CommandName="Detalles" CommandArgument='<%# Eval("id") %>' Text="Ver Detalles" CssClass="btn btn-info btn-sm" />
-
                         &nbsp; <!-- Espaciado entre botones -->
 
                         <!-- Editar -->
