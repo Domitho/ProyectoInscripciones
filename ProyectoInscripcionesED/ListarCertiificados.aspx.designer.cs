@@ -11,17 +11,8 @@ namespace ProyectoInscripcionesED
 {
 
 
-    public partial class ListaInscripcion
+    public partial class ListarCertificados
     {
-
-        /// <summary>
-        /// Control formListaInscripciones.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm formListaInscripciones;
 
         /// <summary>
         /// Control lblMensaje.
@@ -33,12 +24,21 @@ namespace ProyectoInscripcionesED
         protected global::System.Web.UI.WebControls.Label lblMensaje;
 
         /// <summary>
-        /// Control gvInscripciones.
+        /// Control formListaCertificados.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvInscripciones;
+        protected global::System.Web.UI.HtmlControls.HtmlForm formListaCertificados;
+
+        /// <summary>
+        /// Control gvCertificados.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.GridView gvCertificados;
     }
 }

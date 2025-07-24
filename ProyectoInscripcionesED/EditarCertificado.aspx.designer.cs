@@ -11,17 +11,17 @@ namespace ProyectoInscripcionesED
 {
 
 
-    public partial class ListaInscripcion
+    public partial class EditarCertificado
     {
 
         /// <summary>
-        /// Control formListaInscripciones.
+        /// Control formEditarCertificado.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm formListaInscripciones;
+        protected global::System.Web.UI.HtmlControls.HtmlForm formEditarCertificado;
 
         /// <summary>
         /// Control lblMensaje.
@@ -33,12 +33,30 @@ namespace ProyectoInscripcionesED
         protected global::System.Web.UI.WebControls.Label lblMensaje;
 
         /// <summary>
-        /// Control gvInscripciones.
+        /// Control ddlUsuario.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvInscripciones;
+        protected global::System.Web.UI.WebControls.DropDownList ddlUsuario;
+
+        /// <summary>
+        /// Control ddlCurso.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlCurso;
+
+        /// <summary>
+        /// Control btnGuardar.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnGuardar;
     }
 }

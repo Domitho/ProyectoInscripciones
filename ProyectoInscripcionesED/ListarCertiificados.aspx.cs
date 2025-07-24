@@ -6,28 +6,31 @@ using System.Web.UI.WebControls;
 
 namespace ProyectoInscripcionesED
 {
-    public partial class ListaInscripcion : System.Web.UI.Page
+    public partial class ListarCertificados : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                CargarInscripciones();
+                CargarCertificados();
             }
         }
 
-        // Método para cargar las inscripciones en el GridView
-        private void CargarInscripciones()
+        // Método para cargar los certificados
+        private void CargarCertificados()
         {
             string connectionString = ConfigurationManager.ConnectionStrings["PostgresConnection"].ToString();
+
             using (NpgsqlConnection conn = new NpgsqlConnection(connectionString))
             {
                 conn.Open();
 
-                string sql = "SELECT i.id, i.usuario_id, i.taller_id, i.estado, u.nombres AS usuario_nombre, t.nombre AS taller_nombre " +
-                             "FROM inscripcion i " +
-                             "JOIN usuario u ON i.usuario_id = u.id " +
-                             "JOIN taller t ON i.taller_id = t.id";
+                string sql = @"
+                    SELECT c.id, u.nombres AS usuario_nombre, cu.nombre AS curso_nombre
+                    FROM certificado c
+                    JOIN usuario u ON c.usuario_id = u.id
+                    JOIN curso cu ON c.curso_id = cu.id
+                ";
 
                 using (NpgsqlCommand cmd = new NpgsqlCommand(sql, conn))
                 {
@@ -37,37 +40,38 @@ namespace ProyectoInscripcionesED
                         dt.Load(reader);
 
                         // Vinculamos los datos al GridView
-                        gvInscripciones.DataSource = dt;
-                        gvInscripciones.DataBind();
+                        gvCertificados.DataSource = dt;
+                        gvCertificados.DataBind();
                     }
                 }
             }
         }
 
-        // Manejo del comando de ver detalles
-        protected void gvInscripciones_RowCommand(object sender, GridViewCommandEventArgs e)
+        // Manejo del comando de los botones (Detalles, Editar, Eliminar)
+        protected void gvCertificados_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            // Obtener el ID de la inscripción desde el CommandArgument
-            int idInscripcion = Convert.ToInt32(e.CommandArgument);
+            int idCertificado = Convert.ToInt32(e.CommandArgument);
 
             if (e.CommandName == "Detalles")
             {
-                // Redirigir a la página de detalles con el ID de la inscripción
-                Response.Redirect("DetallesInscripcion.aspx?id=" + idInscripcion);
+                // Redirigir a la página de detalles con el ID del certificado
+                Response.Redirect("DetallesCertificado.aspx?id=" + idCertificado);
             }
             else if (e.CommandName == "Editar")
             {
-                // Redirigir a la página de edición con el ID de la inscripción
-                Response.Redirect("EditarInscripcion.aspx?id=" + idInscripcion);
+                // Redirigir a la página de edición con el ID del certificado
+                Response.Redirect("EditarCertificado.aspx?id=" + idCertificado);
             }
             else if (e.CommandName == "Eliminar")
             {
-                // Eliminar la inscripción de la base de datos
-                EliminarInscripcion(idInscripcion);
+                // Eliminar el certificado de la base de datos
+                EliminarCertificado(idCertificado);
             }
         }
 
-        private void EliminarInscripcion(int idInscripcion)
+        // Método para eliminar un certificado
+        // Dentro del evento RowCommand para Eliminar, Editar o Detalles:
+        private void EliminarCertificado(int idCertificado)
         {
             string connectionString = ConfigurationManager.ConnectionStrings["PostgresConnection"].ToString();
 
@@ -75,26 +79,28 @@ namespace ProyectoInscripcionesED
             {
                 conn.Open();
 
-                string sql = "DELETE FROM inscripcion WHERE id = @idInscripcion";
+                string sql = "DELETE FROM certificado WHERE id = @idCertificado";
 
                 using (NpgsqlCommand cmd = new NpgsqlCommand(sql, conn))
                 {
-                    cmd.Parameters.AddWithValue("idInscripcion", idInscripcion);
+                    cmd.Parameters.AddWithValue("idCertificado", idCertificado);
+
                     int rowsAffected = cmd.ExecuteNonQuery();
 
                     if (rowsAffected > 0)
                     {
-                        lblMensaje.Text = "Inscripción eliminada correctamente.";
+                        lblMensaje.Text = "Certificado eliminado correctamente.";  // Mensaje de éxito
                         lblMensaje.ForeColor = System.Drawing.Color.Green;
-                        CargarInscripciones(); // Recargar las inscripciones
+                        CargarCertificados(); // Recargar los certificados
                     }
                     else
                     {
-                        lblMensaje.Text = "No se pudo eliminar la inscripción. Intente de nuevo.";
+                        lblMensaje.Text = "No se pudo eliminar el certificado. Intente de nuevo.";  // Mensaje de error
                         lblMensaje.ForeColor = System.Drawing.Color.Red;
                     }
                 }
             }
         }
+
     }
 }

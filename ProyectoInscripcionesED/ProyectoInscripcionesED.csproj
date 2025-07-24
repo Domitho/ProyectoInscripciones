@@ -137,7 +137,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
+    <Content Include="AgregarCertificado.aspx" />
     <Content Include="AgregarCurso.aspx" />
+    <Content Include="AgregarInscripcion.aspx" />
     <Content Include="AgregarTaller.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="Content\bootstrap-theme.css" />
@@ -146,7 +148,9 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
+    <Content Include="EditarCertificado.aspx" />
     <Content Include="EditarCurso.aspx" />
+    <Content Include="EditarInscripcion.aspx" />
     <Content Include="EditarTaller.aspx" />
     <Content Include="EditarUsuario.aspx" />
     <Content Include="favicon.ico" />
@@ -162,6 +166,7 @@
     <Content Include="Content\bootstrap-theme.css.map" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="ListaInscripcion.aspx" />
+    <Content Include="ListarCertiificados.aspx" />
     <Content Include="ListarCursos.aspx" />
     <Content Include="ListarTaller.aspx" />
     <Content Include="ListarUsuario.aspx" />
@@ -202,12 +207,26 @@
     <Content Include="Site.Mobile.Master" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AgregarCertificado.aspx.cs">
+      <DependentUpon>AgregarCertificado.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AgregarCertificado.aspx.designer.cs">
+      <DependentUpon>AgregarCertificado.aspx</DependentUpon>
+    </Compile>
     <Compile Include="AgregarCurso.aspx.cs">
       <DependentUpon>AgregarCurso.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="AgregarCurso.aspx.designer.cs">
       <DependentUpon>AgregarCurso.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="AgregarInscripcion.aspx.cs">
+      <DependentUpon>AgregarInscripcion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="AgregarInscripcion.aspx.designer.cs">
+      <DependentUpon>AgregarInscripcion.aspx</DependentUpon>
     </Compile>
     <Compile Include="AgregarTaller.aspx.cs">
       <DependentUpon>AgregarTaller.aspx</DependentUpon>
@@ -239,12 +258,26 @@
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
     </Compile>
+    <Compile Include="EditarCertificado.aspx.cs">
+      <DependentUpon>EditarCertificado.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditarCertificado.aspx.designer.cs">
+      <DependentUpon>EditarCertificado.aspx</DependentUpon>
+    </Compile>
     <Compile Include="EditarCurso.aspx.cs">
       <DependentUpon>EditarCurso.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="EditarCurso.aspx.designer.cs">
       <DependentUpon>EditarCurso.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="EditarInscripcion.aspx.cs">
+      <DependentUpon>EditarInscripcion.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="EditarInscripcion.aspx.designer.cs">
+      <DependentUpon>EditarInscripcion.aspx</DependentUpon>
     </Compile>
     <Compile Include="EditarTaller.aspx.cs">
       <DependentUpon>EditarTaller.aspx</DependentUpon>
@@ -269,6 +302,13 @@
     </Compile>
     <Compile Include="ListaInscripcion.aspx.designer.cs">
       <DependentUpon>ListaInscripcion.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ListarCertiificados.aspx.cs">
+      <DependentUpon>ListarCertiificados.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListarCertiificados.aspx.designer.cs">
+      <DependentUpon>ListarCertiificados.aspx</DependentUpon>
     </Compile>
     <Compile Include="ListarCursos.aspx.cs">
       <DependentUpon>ListarCursos.aspx</DependentUpon>
