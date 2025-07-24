@@ -173,6 +173,7 @@
     <Content Include="ListarTaller.aspx" />
     <Content Include="ListarUsuario.aspx" />
     <Content Include="Login.aspx" />
+    <Content Include="Loginn.aspx" />
     <Content Include="Prueba.aspx" />
     <Content Include="Registro.aspx" />
     <Content Include="Scripts\bootstrap.js" />
@@ -355,6 +356,13 @@
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Loginn.aspx.cs">
+      <DependentUpon>Loginn.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Loginn.aspx.designer.cs">
+      <DependentUpon>Loginn.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Prueba.aspx.cs">
