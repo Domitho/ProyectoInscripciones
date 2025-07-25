@@ -1,29 +1,44 @@
-﻿<%@ Page Title="Lista de Asistencias" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ListarAsistencia.aspx.cs" Inherits="ProyectoInscripcionesED.ListarAsistencia" %>
+﻿<%@ Page Title="Lista de Asistencias" Language="C#" MasterPageFile="~/Site.Master"
+    AutoEventWireup="true" CodeBehind="ListarAsistencia.aspx.cs"
+    Inherits="ProyectoInscripcionesED.ListarAsistencia" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+
+    <!-- CSS DataTables -->
+    <link rel="stylesheet"
+          href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+
     <h2 class="my-4">Lista de Asistencias</h2>
 
-    <!-- Label para mostrar mensajes de éxito o error -->
     <asp:Label ID="lblMensaje" runat="server" ForeColor="Green"></asp:Label><br />
 
-    <form id="formListaAsistencia" runat="server">
-        <!-- GridView para mostrar las asistencias -->
-        <asp:GridView ID="gvAsistencia" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-bordered table-hover" OnRowCommand="gvAsistencia_RowCommand">
-            <Columns>
-                <asp:BoundField DataField="id" HeaderText="ID" SortExpression="id" HeaderStyle-CssClass="table-header" />
-                <asp:BoundField DataField="inscripcion_id" HeaderText="ID Inscripción" SortExpression="inscripcion_id" HeaderStyle-CssClass="table-header" />
-                <asp:BoundField DataField="usuario_nombre" HeaderText="Usuario" SortExpression="usuario_nombre" HeaderStyle-CssClass="table-header" />
-                <asp:BoundField DataField="asistio" HeaderText="Asistió" SortExpression="asistio" HeaderStyle-CssClass="table-header" />
-                
-                <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="table-header">
-                    <ItemTemplate>
-                        &nbsp; <!-- Espaciado entre botones -->
+    <form runat="server">
+        <asp:Button ID="btnAgregarAsistencia" runat="server"
+                    Text="Agregar Asistencia"
+                    CssClass="btn btn-success mb-3"
+                    OnClick="btnAgregarAsistencia_Click" />
 
-                        <!-- Marcar Asistencia -->
-                        <asp:LinkButton ID="btnMarcarAsistencia" runat="server" CommandName="MarcarAsistencia" CommandArgument='<%# Eval("id") %>' Text="Marcar Asistencia" CssClass="btn btn-success btn-sm" />
-                    </ItemTemplate>
-                </asp:TemplateField>
-            </Columns>
-        </asp:GridView>
+        <!-- Tabla HTML para DataTables -->
+        <asp:Literal ID="ltTabla" runat="server"></asp:Literal>
     </form>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        $(function () {
+            $('#tblAsistencia').DataTable({
+                paging: true,
+                pageLength: 20,
+                searching: true,
+                order: [[0, 'asc']],
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
+                }
+            });
+        });
+    </script>
+
 </asp:Content>

@@ -1,8 +1,8 @@
 ﻿using System;
-using System.Data;
+using System.Text;
 using System.Configuration;
+using System.Data;
 using Npgsql;
-using System.Web.UI.WebControls;
 
 namespace ProyectoInscripcionesED
 {
@@ -16,97 +16,56 @@ namespace ProyectoInscripcionesED
             }
         }
 
-        // Método para cargar los certificados
         private void CargarCertificados()
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["PostgresConnection"].ToString();
+            StringBuilder sb = new StringBuilder();
 
-            using (NpgsqlConnection conn = new NpgsqlConnection(connectionString))
+            string connStr = ConfigurationManager.ConnectionStrings["PostgresConnection"].ToString();
+
+            using (NpgsqlConnection conn = new NpgsqlConnection(connStr))
             {
                 conn.Open();
-
                 string sql = @"
-                    SELECT c.id, u.nombres AS usuario_nombre, cu.nombre AS curso_nombre
+                    SELECT c.id,
+                           u.nombres AS usuario_nombre,
+                           cu.nombre AS curso_nombre
                     FROM certificado c
                     JOIN usuario u ON c.usuario_id = u.id
-                    JOIN curso cu ON c.curso_id = cu.id
-                ";
+                    JOIN curso   cu ON c.curso_id   = cu.id
+                    ORDER BY c.id";
 
                 using (NpgsqlCommand cmd = new NpgsqlCommand(sql, conn))
+                using (NpgsqlDataReader reader = cmd.ExecuteReader())
                 {
-                    using (NpgsqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        DataTable dt = new DataTable();
-                        dt.Load(reader);
+                    sb.Append("<table id='tblCertificados' class='table table-striped table-bordered' style='width:100%'>");
+                    sb.Append("<thead><tr><th>ID</th><th>Usuario</th><th>Curso</th><th>Acciones</th></tr></thead><tbody>");
 
-                        // Vinculamos los datos al GridView
-                        gvCertificados.DataSource = dt;
-                        gvCertificados.DataBind();
+                    while (reader.Read())
+                    {
+                        int id = Convert.ToInt32(reader["id"]);
+
+                        sb.Append("<tr>");
+                        sb.Append($"<td>{id}</td>");
+                        sb.Append($"<td>{reader["usuario_nombre"]}</td>");
+                        sb.Append($"<td>{reader["curso_nombre"]}</td>");
+                        sb.Append("<td>");
+                        sb.Append($"<a href='EditarCertificado.aspx?id={id}' class='btn btn-warning btn-sm'>Editar</a>&nbsp;");
+                        sb.Append($"<a href='EliminarCertificado.aspx?id={id}' class='btn btn-danger btn-sm' onclick=\"return confirm('¿Está seguro de eliminar?')\">Eliminar</a>");
+                        sb.Append("</td>");
+                        sb.Append("</tr>");
                     }
+
+                    sb.Append("</tbody></table>");
                 }
             }
+
+            // Inyectar tabla en el Literal
+            ltFilas.Text = sb.ToString();
         }
 
-        // Manejo del comando de los botones (Detalles, Editar, Eliminar)
-        protected void gvCertificados_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            int idCertificado = Convert.ToInt32(e.CommandArgument);
-
-            if (e.CommandName == "Detalles")
-            {
-                // Redirigir a la página de detalles con el ID del certificado
-                Response.Redirect("DetallesCertificado.aspx?id=" + idCertificado);
-            }
-            else if (e.CommandName == "Editar")
-            {
-                // Redirigir a la página de edición con el ID del certificado
-                Response.Redirect("EditarCertificado.aspx?id=" + idCertificado);
-            }
-            else if (e.CommandName == "Eliminar")
-            {
-                // Eliminar el certificado de la base de datos
-                EliminarCertificado(idCertificado);
-            }
-        }
-
-        // Método para eliminar un certificado
-        // Dentro del evento RowCommand para Eliminar, Editar o Detalles:
-        private void EliminarCertificado(int idCertificado)
-        {
-            string connectionString = ConfigurationManager.ConnectionStrings["PostgresConnection"].ToString();
-
-            using (NpgsqlConnection conn = new NpgsqlConnection(connectionString))
-            {
-                conn.Open();
-
-                string sql = "DELETE FROM certificado WHERE id = @idCertificado";
-
-                using (NpgsqlCommand cmd = new NpgsqlCommand(sql, conn))
-                {
-                    cmd.Parameters.AddWithValue("idCertificado", idCertificado);
-
-                    int rowsAffected = cmd.ExecuteNonQuery();
-
-                    if (rowsAffected > 0)
-                    {
-                        lblMensaje.Text = "Certificado eliminado correctamente.";  // Mensaje de éxito
-                        lblMensaje.ForeColor = System.Drawing.Color.Green;
-                        CargarCertificados(); // Recargar los certificados
-                    }
-                    else
-                    {
-                        lblMensaje.Text = "No se pudo eliminar el certificado. Intente de nuevo.";  // Mensaje de error
-                        lblMensaje.ForeColor = System.Drawing.Color.Red;
-                    }
-                }
-            }
-        }
         protected void btnAgregarCertificado_Click(object sender, EventArgs e)
         {
-            // Aquí puedes redirigir a la página de agregar un nuevo certificado, por ejemplo:
             Response.Redirect("AgregarCertificado.aspx");
         }
-
-
     }
 }

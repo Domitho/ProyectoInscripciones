@@ -24,15 +24,6 @@ namespace ProyectoInscripcionesED
         protected global::System.Web.UI.WebControls.Label lblMensaje;
 
         /// <summary>
-        /// Control formListaCertificados.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm formListaCertificados;
-
-        /// <summary>
         /// Control btnAgregarCertificado.
         /// </summary>
         /// <remarks>
@@ -42,12 +33,12 @@ namespace ProyectoInscripcionesED
         protected global::System.Web.UI.WebControls.Button btnAgregarCertificado;
 
         /// <summary>
-        /// Control gvCertificados.
+        /// Control ltFilas.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvCertificados;
+        protected global::System.Web.UI.WebControls.Literal ltFilas;
     }
 }

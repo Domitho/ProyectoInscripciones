@@ -24,21 +24,21 @@ namespace ProyectoInscripcionesED
         protected global::System.Web.UI.WebControls.Label lblMensaje;
 
         /// <summary>
-        /// Control formListaAsistencia.
+        /// Control btnAgregarAsistencia.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm formListaAsistencia;
+        protected global::System.Web.UI.WebControls.Button btnAgregarAsistencia;
 
         /// <summary>
-        /// Control gvAsistencia.
+        /// Control ltTabla.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvAsistencia;
+        protected global::System.Web.UI.WebControls.Literal ltTabla;
     }
 }

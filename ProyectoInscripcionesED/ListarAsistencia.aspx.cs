@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Data;
+using System.Text;
 using System.Configuration;
 using Npgsql;
-using System.Web.UI.WebControls;
 
 namespace ProyectoInscripcionesED
 {
@@ -16,87 +15,62 @@ namespace ProyectoInscripcionesED
             }
         }
 
-        // Método para cargar las asistencias
         private void CargarAsistencias()
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["PostgresConnection"].ToString();
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<table id='tblAsistencia' class='table table-striped table-bordered' style='width:100%'>");
+            sb.Append("<thead><tr><th>ID</th><th>ID Inscripción</th><th>Usuario</th><th>Asistió</th><th>Acciones</th></tr></thead><tbody>");
 
-            using (NpgsqlConnection conn = new NpgsqlConnection(connectionString))
+            string connStr = ConfigurationManager.ConnectionStrings["PostgresConnection"].ToString();
+
+            using (NpgsqlConnection conn = new NpgsqlConnection(connStr))
             {
                 conn.Open();
-
                 string sql = @"
-                    SELECT a.id, a.inscripcion_id, u.nombres AS usuario_nombre, a.asistio
+                    SELECT a.id,
+                           a.inscripcion_id,
+                           u.nombres AS usuario_nombre,
+                           a.asistio
                     FROM asistencia a
                     JOIN inscripcion i ON a.inscripcion_id = i.id
-                    JOIN usuario u ON i.usuario_id = u.id
-                ";
+                    JOIN usuario u     ON i.usuario_id    = u.id
+                    ORDER BY a.id";
 
                 using (NpgsqlCommand cmd = new NpgsqlCommand(sql, conn))
+                using (NpgsqlDataReader reader = cmd.ExecuteReader())
                 {
-                    using (NpgsqlDataReader reader = cmd.ExecuteReader())
+                    while (reader.Read())
                     {
-                        DataTable dt = new DataTable();
-                        dt.Load(reader);
+                        int id = Convert.ToInt32(reader["id"]);
+                        bool asistio = Convert.ToBoolean(reader["asistio"]);
 
-                        // Vinculamos los datos al GridView
-                        gvAsistencia.DataSource = dt;
-                        gvAsistencia.DataBind();
+                        sb.Append("<tr>");
+                        sb.Append($"<td>{id}</td>");
+                        sb.Append($"<td>{reader["inscripcion_id"]}</td>");
+                        sb.Append($"<td>{reader["usuario_nombre"]}</td>");
+                        sb.Append($"<td>{(asistio ? "Sí" : "No")}</td>");
+                        sb.Append("<td>");
+                        if (!asistio)
+                        {
+                            sb.Append($"<a href='MarcarAsistencia.aspx?id={id}' class='btn btn-success btn-sm' onclick=\"return confirm('¿Marcar asistencia?')\">Marcar</a>");
+                        }
+                        else
+                        {
+                            sb.Append("<span class='badge bg-success'>Asistió</span>");
+                        }
+                        sb.Append("</td>");
+                        sb.Append("</tr>");
                     }
                 }
             }
+
+            sb.Append("</tbody></table>");
+            ltTabla.Text = sb.ToString();
         }
 
-        // Manejo del comando de los botones (Detalles y Marcar Asistencia)
-        protected void gvAsistencia_RowCommand(object sender, GridViewCommandEventArgs e)
+        protected void btnAgregarAsistencia_Click(object sender, EventArgs e)
         {
-            int idAsistencia = Convert.ToInt32(e.CommandArgument);
-
-            if (e.CommandName == "Detalles")
-            {
-                // Redirigir a la página de detalles con el ID de la asistencia
-                Response.Redirect("DetallesAsistencia.aspx?id=" + idAsistencia);
-            }
-            else if (e.CommandName == "MarcarAsistencia")
-            {
-                // Marcar la asistencia en la base de datos
-                MarcarAsistencia(idAsistencia);
-            }
+            Response.Redirect("AgregarAsistencia.aspx");
         }
-
-        // Método para marcar la asistencia
-        // Método para marcar la asistencia
-        private void MarcarAsistencia(int idAsistencia)
-        {
-            string connectionString = ConfigurationManager.ConnectionStrings["PostgresConnection"].ToString();
-
-            using (NpgsqlConnection conn = new NpgsqlConnection(connectionString))
-            {
-                conn.Open();
-
-                // Actualizar el valor de "asistio" para el registro seleccionado
-                string sql = "UPDATE asistencia SET asistio = TRUE WHERE id = @idAsistencia";
-
-                using (NpgsqlCommand cmd = new NpgsqlCommand(sql, conn))
-                {
-                    cmd.Parameters.AddWithValue("idAsistencia", idAsistencia);
-
-                    int rowsAffected = cmd.ExecuteNonQuery();
-
-                    if (rowsAffected > 0)
-                    {
-                        lblMensaje.Text = "Asistencia marcada correctamente.";  // Mensaje de éxito
-                        lblMensaje.ForeColor = System.Drawing.Color.Green;
-                        CargarAsistencias(); // Recargar las asistencias
-                    }
-                    else
-                    {
-                        lblMensaje.Text = "No se pudo marcar la asistencia. Intente de nuevo.";  // Mensaje de error
-                        lblMensaje.ForeColor = System.Drawing.Color.Red;
-                    }
-                }
-            }
-        }
-
     }
 }
