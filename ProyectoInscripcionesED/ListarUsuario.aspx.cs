@@ -1,138 +1,86 @@
 ﻿using System;
-using System.Data;
+using System.Text;
+using System.Configuration;
 using Npgsql;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace ProyectoInscripcionesED
 {
-    public partial class ListarUsuario : Page
+    public partial class ListarUsuario : System.Web.UI.Page
     {
-        // Cadena de conexión a la base de datos PostgreSQL
-        string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["PostgresConnection"].ConnectionString;
+        private readonly string connectionString = ConfigurationManager.ConnectionStrings["PostgresConnection"].ConnectionString;
 
-        // Método que se ejecuta cuando se carga la página
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Si la página se está cargando por primera vez, obtenemos los usuarios
             if (!IsPostBack)
             {
                 ListarUsuarios();
             }
         }
 
-        // Método para listar los usuarios desde la base de datos usando la función listar_usuarios
         private void ListarUsuarios()
         {
-            using (var connection = new NpgsqlConnection(connectionString))
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<table id='tblUsuarios' class='table table-hover table-bordered align-middle' style='width:100%'>");
+            sb.Append("<thead class='table-primary'>");
+            sb.Append("<tr>");
+            sb.Append("<th>ID</th>");
+            sb.Append("<th>Nombres</th>");
+            sb.Append("<th>Apellidos</th>");
+            sb.Append("<th>Correo</th>");
+            sb.Append("<th>Teléfono</th>");
+            sb.Append("<th>Tipo</th>");
+            sb.Append("<th>Acciones</th>");
+            sb.Append("</tr></thead><tbody>");
+
+            using (var conn = new NpgsqlConnection(connectionString))
             {
                 try
                 {
-                    connection.Open();
-                    using (var command = new NpgsqlCommand("SELECT * FROM listar_usuarios();", connection))
+                    conn.Open();
+                    using (var cmd = new NpgsqlCommand("SELECT * FROM listar_usuarios();", conn))
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        // Ejecutamos la función y obtenemos los resultados
-                        using (var reader = command.ExecuteReader())
+                        if (reader.HasRows)
                         {
-                            // Verificamos si hay resultados
-                            if (reader.HasRows)
+                            while (reader.Read())
                             {
-                                // Enlazamos los resultados al GridView
-                                GridViewUsuarios.DataSource = reader;
-                                GridViewUsuarios.DataBind();
+                                int id = Convert.ToInt32(reader["usuario_id"]);
+                                string tipo = reader["usuario_tipo_usuario"].ToString();
+                                string badge = tipo == "Instructor" ? "bg-warning text-dark" : "bg-info text-white";
+
+                                sb.Append("<tr>");
+                                sb.Append($"<td>{id}</td>");
+                                sb.Append($"<td>{reader["usuario_nombres"]}</td>");
+                                sb.Append($"<td>{reader["usuario_apellidos"]}</td>");
+                                sb.Append($"<td>{reader["usuario_correo"]}</td>");
+                                sb.Append($"<td>{reader["usuario_telefono"]}</td>");
+                                sb.Append($"<td><span class='badge {badge}'>{tipo}</span></td>");
+                                sb.Append("<td>");
+                                sb.Append($"<a href='EditarUsuario.aspx?usuarioId={id}' class='btn btn-sm btn-outline-warning'>✏️ Editar</a> ");
+                                sb.Append($"<a href='EliminarUsuario.aspx?usuarioId={id}' class='btn btn-sm btn-outline-danger' onclick=\"return confirm('¿Eliminar este usuario?')\">🗑️ Eliminar</a>");
+                                sb.Append("</td>");
+                                sb.Append("</tr>");
                             }
-                            else
-                            {
-                                // Si no hay usuarios, mostramos un mensaje
-                                lblNoUsuarios.Visible = true;
-                            }
+                        }
+                        else
+                        {
+                            sb.Append("<tr><td colspan='7' class='text-center text-muted'>No hay usuarios registrados.</td></tr>");
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    // Manejo de errores
-                    Response.Write("<script>alert('Error al listar usuarios: " + ex.Message + "');</script>");
+                    sb.Append($"<tr><td colspan='7' class='text-center text-danger'>Error: {ex.Message}</td></tr>");
                 }
             }
+
+            sb.Append("</tbody></table>");
+            ltTabla.Text = sb.ToString();
         }
 
-        // Evento RowDataBound para personalizar las filas del GridView (si es necesario)
-        protected void GridViewUsuarios_RowDataBound(object sender, GridViewRowEventArgs e)
+        protected void btnAgregar_Click(object sender, EventArgs e)
         {
-            // Si la fila es de tipo de datos (no es un encabezado ni pie de página)
-            if (e.Row.RowType == DataControlRowType.DataRow)
-            {
-                // Ejemplo de personalización: puedes acceder a las celdas de cada fila
-                // e.g., formatear un campo o agregar clases CSS personalizadas
-                // Ejemplo: colorear el fondo de una fila si el usuario es "Instructor"
-                string tipoUsuario = e.Row.Cells[5].Text; // Suponiendo que el tipo de usuario está en la 6ª columna
-                if (tipoUsuario == "Instructor")
-                {
-                    e.Row.BackColor = System.Drawing.Color.LightYellow;
-                }
-            }
-        }
-
-        // Evento para el botón de Editar
-        protected void btnEditar_Click(object sender, EventArgs e)
-        {
-            // Obtener el ID del usuario desde el argumento del comando
-            Button btn = (Button)sender;
-            string usuarioId = btn.CommandArgument;
-
-            // Redirigir a la página de edición de usuarios (puedes personalizar la URL de destino)
-            Response.Redirect("EditarUsuario.aspx?usuarioId=" + usuarioId);
-        }
-
-        protected void btnEliminar_Click(object sender, EventArgs e)
-        {
-            // Obtener el ID del usuario desde el argumento del comando
-            Button btn = (Button)sender;
-            string usuarioId = btn.CommandArgument;
-
-            // Convertir el usuarioId a entero
-            int usuarioIdInt;
-            if (int.TryParse(usuarioId, out usuarioIdInt))
-            {
-                // Eliminar el usuario de la base de datos usando la función eliminar_usuario
-                EliminarUsuario(usuarioIdInt);
-            }
-            else
-            {
-                // Si no se puede convertir el ID, mostrar un error
-                Response.Write("<script>alert('ID de usuario no válido.');</script>");
-            }
-        }
-
-        private void EliminarUsuario(int usuarioId)
-        {
-            using (var connection = new NpgsqlConnection(connectionString))
-            {
-                try
-                {
-                    connection.Open();
-                    using (var command = new NpgsqlCommand("SELECT eliminar_usuario(@usuarioId);", connection))
-                    {
-                        // Agregar el parámetro para la función
-                        command.Parameters.AddWithValue("usuarioId", usuarioId);
-
-                        // Ejecutar la función
-                        string resultado = (string)command.ExecuteScalar();
-
-                        // Mostrar el resultado en un mensaje de alerta
-                        Response.Write("<script>alert('" + resultado + "');</script>");
-
-                        // Volver a cargar los usuarios después de eliminar
-                        ListarUsuarios();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // Manejo de errores
-                    Response.Write("<script>alert('Error al eliminar usuario: " + ex.Message + "');</script>");
-                }
-            }
+            Response.Redirect("AgregarUsuario.aspx");
         }
     }
 }

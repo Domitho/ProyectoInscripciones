@@ -15,15 +15,6 @@ namespace ProyectoInscripcionesED
     {
 
         /// <summary>
-        /// Control formListaInscripciones.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlForm formListaInscripciones;
-
-        /// <summary>
         /// Control lblMensaje.
         /// </summary>
         /// <remarks>
@@ -42,12 +33,12 @@ namespace ProyectoInscripcionesED
         protected global::System.Web.UI.WebControls.Button btnAgregar;
 
         /// <summary>
-        /// Control gvInscripciones.
+        /// Control ltTabla.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.GridView gvInscripciones;
+        protected global::System.Web.UI.WebControls.Literal ltTabla;
     }
 }

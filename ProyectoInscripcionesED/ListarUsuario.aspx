@@ -1,33 +1,55 @@
-﻿<%@ Page Title="Listar Usuarios" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ListarUsuario.aspx.cs" Inherits="ProyectoInscripcionesED.ListarUsuario" %>
+﻿<%@ Page Title="Listar Usuarios" Language="C#" MasterPageFile="~/Site.Master"
+    AutoEventWireup="true" CodeBehind="ListarUsuario.aspx.cs"
+    Inherits="ProyectoInscripcionesED.ListarUsuario" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <h1 class="my-4">Lista de Usuarios</h1>
 
-    <!-- Mostrar mensaje si no hay usuarios -->
-    <asp:Label ID="lblNoUsuarios" runat="server" Text="No hay usuarios registrados." Visible="false" ForeColor="Red" />
+    <!-- CSS DataTables -->
+    <link rel="stylesheet"
+          href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
 
-    <form id="form1" runat="server">
-        <!-- Usamos GridView para mostrar los usuarios -->
-        <asp:GridView ID="GridViewUsuarios" runat="server" AutoGenerateColumns="False" CssClass="table table-striped table-bordered table-hover" 
-                      EmptyDataText="No se han encontrado usuarios" OnRowDataBound="GridViewUsuarios_RowDataBound">
-            <Columns>
-                <asp:BoundField DataField="usuario_id" HeaderText="ID" SortExpression="usuario_id" HeaderStyle-CssClass="table-header" />
-                <asp:BoundField DataField="usuario_nombres" HeaderText="Nombres" SortExpression="usuario_nombres" HeaderStyle-CssClass="table-header" />
-                <asp:BoundField DataField="usuario_apellidos" HeaderText="Apellidos" SortExpression="usuario_apellidos" HeaderStyle-CssClass="table-header" />
-                <asp:BoundField DataField="usuario_correo" HeaderText="Correo" SortExpression="usuario_correo" HeaderStyle-CssClass="table-header" />
-                <asp:BoundField DataField="usuario_telefono" HeaderText="Teléfono" SortExpression="usuario_telefono" HeaderStyle-CssClass="table-header" />
-                <asp:BoundField DataField="usuario_tipo_usuario" HeaderText="Tipo de Usuario" SortExpression="usuario_tipo_usuario" HeaderStyle-CssClass="table-header" />
-                
-                <asp:TemplateField HeaderText="Acciones" HeaderStyle-CssClass="table-header">
-                    <ItemTemplate>
-                        <!-- Botón de Editar -->
-                        <asp:Button ID="btnEditar" runat="server" Text="Editar" CommandName="Editar" CommandArgument='<%# Eval("usuario_id") %>' OnClick="btnEditar_Click" CssClass="btn btn-warning btn-sm" />
+    <div class="container-fluid">
+        <div class="card shadow-lg mt-4">
+            <div class="card-header bg-gradient-primary text-white">
+                <h3 class="mb-0">👥 Lista de Usuarios</h3>
+            </div>
+            <div class="card-body">
+                <!-- Mensaje -->
+                <asp:Label ID="lblMensaje" runat="server" ForeColor="Green" CssClass="mb-2 d-block"></asp:Label>
 
-                        <!-- Botón de Eliminar -->
-                        <asp:Button ID="btnEliminar" runat="server" Text="Eliminar" CommandName="Eliminar" CommandArgument='<%# Eval("usuario_id") %>' OnClick="btnEliminar_Click" CssClass="btn btn-danger btn-sm" />
-                    </ItemTemplate>
-                </asp:TemplateField>
-            </Columns>
-        </asp:GridView>
-    </form>
+              
+                <form runat="server">
+                    <div class="mb-3">
+                        <asp:Button ID="btnAgregar" runat="server"
+                                    Text="➕ Agregar Usuario"
+                                    CssClass="btn btn-success"
+                                    OnClick="btnAgregar_Click" />
+                    </div>
+
+                    <!-- Tabla HTML con DataTables -->
+                    <asp:Literal ID="ltTabla" runat="server"></asp:Literal>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        $(function () {
+            $('#tblUsuarios').DataTable({
+                paging: true,
+                pageLength: 20,
+                searching: true,
+                order: [[0, 'asc']],
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
+                }
+            });
+        });
+    </script>
+
 </asp:Content>

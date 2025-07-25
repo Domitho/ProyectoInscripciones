@@ -1,119 +1,75 @@
 ﻿using System;
-using System.Data;
+using System.Text;
+using System.Configuration;
 using Npgsql;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace ProyectoInscripcionesED
 {
-    public partial class ListarCursosPage : Page
+    public partial class ListarCursosPage : System.Web.UI.Page
     {
-        // Cadena de conexión a la base de datos PostgreSQL
-        string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["PostgresConnection"].ConnectionString;
-
-        // Método que se ejecuta cuando se carga la página
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Si la página se está cargando por primera vez, obtenemos los cursos
             if (!IsPostBack)
             {
                 ListarCursos();
             }
         }
 
-        // Método para listar los cursos desde la base de datos usando la función listar_cursos
         private void ListarCursos()
         {
-            using (var connection = new NpgsqlConnection(connectionString))
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<table id='tblCursos' class='table table-striped table-bordered' style='width:100%'>");
+            sb.Append("<thead><tr><th>ID</th><th>Nombre</th><th>Descripción</th><th>Fecha Inicio</th><th>Fecha Fin</th><th>Horas Mínimas</th><th>Acciones</th></tr></thead><tbody>");
+
+            string connStr = ConfigurationManager.ConnectionStrings["PostgresConnection"].ConnectionString;
+
+            using (var conn = new NpgsqlConnection(connStr))
             {
                 try
                 {
-                    connection.Open();
-
-                    // Ejecutamos la función listar_cursos que devuelve todos los cursos
-                    using (var command = new NpgsqlCommand("SELECT * FROM listar_cursos();", connection))
+                    conn.Open();
+                    using (var cmd = new NpgsqlCommand("SELECT * FROM listar_cursos();", conn))
+                    using (var reader = cmd.ExecuteReader())
                     {
-                        using (var reader = command.ExecuteReader())
+                        if (reader.HasRows)
                         {
-                            // Verificamos si hay resultados
-                            if (reader.HasRows)
+                            while (reader.Read())
                             {
-                                // Enlazamos los resultados al GridView
-                                GridViewCursos.DataSource = reader;
-                                GridViewCursos.DataBind();
+                                int cursoId = Convert.ToInt32(reader["curso_id"]);
+
+                                sb.Append("<tr>");
+                                sb.Append($"<td>{cursoId}</td>");
+                                sb.Append($"<td>{reader["nombre"]}</td>");
+                                sb.Append($"<td>{reader["descripcion"]}</td>");
+                                sb.Append($"<td>{reader["fecha_inicio"]}</td>");
+                                sb.Append($"<td>{reader["fecha_fin"]}</td>");
+                                sb.Append($"<td>{reader["horas_minimas"]}</td>");
+                                sb.Append("<td>");
+                                sb.Append($"<a href='EditarCurso.aspx?cursoId={cursoId}' class='btn btn-warning btn-sm'>Editar</a>&nbsp;");
+                                sb.Append($"<a href='EliminarCurso.aspx?cursoId={cursoId}' class='btn btn-danger btn-sm' onclick=\"return confirm('¿Eliminar este curso?')\">Eliminar</a>");
+                                sb.Append("</td>");
+                                sb.Append("</tr>");
                             }
-                            else
-                            {
-                                // Si no hay cursos, mostramos un mensaje
-                                lblNoCursos.Visible = true;
-                            }
+                        }
+                        else
+                        {
+                            sb.Append("<tr><td colspan='7' class='text-center'>No se han encontrado cursos.</td></tr>");
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    // Manejo de errores
-                    Response.Write("<script>alert('Error al listar cursos: " + ex.Message + "');</script>");
+                    sb.Append($"<tr><td colspan='7' class='text-danger text-center'>Error al listar cursos: {ex.Message}</td></tr>");
                 }
             }
+
+            sb.Append("</tbody></table>");
+            ltTabla.Text = sb.ToString();
         }
 
-        // Evento para el botón de Editar
-        protected void btnEditar_Click(object sender, EventArgs e)
-        {
-            // Obtener el ID del curso desde el argumento del comando
-            Button btn = (Button)sender;
-            string cursoId = btn.CommandArgument;
-
-            // Redirigir a la página de edición de cursos (puedes personalizar la URL de destino)
-            Response.Redirect("EditarCurso.aspx?cursoId=" + cursoId);
-        }
-
-        // Evento para el botón de Eliminar
-        protected void btnEliminar_Click(object sender, EventArgs e)
-        {
-            // Obtener el ID del curso desde el argumento del comando
-            Button btn = (Button)sender;
-            int cursoId = Convert.ToInt32(btn.CommandArgument);  // Asegúrate de que el cursoId sea un entero
-
-            // Eliminar el curso de la base de datos usando la función eliminar_curso
-            EliminarCurso(cursoId);
-        }
-
-        private void EliminarCurso(int cursoId)  // Asegúrate de que el parámetro sea INT
-        {
-            using (var connection = new NpgsqlConnection(connectionString))
-            {
-                try
-                {
-                    connection.Open();
-                    using (var command = new NpgsqlCommand("SELECT eliminar_curso(@cursoId);", connection))
-                    {
-                        // Agregar el parámetro para la función
-                        command.Parameters.AddWithValue("cursoId", cursoId);
-
-                        // Ejecutar la función y obtener el resultado (mensaje)
-                        string resultado = (string)command.ExecuteScalar();
-
-                        // Mostrar el resultado en un mensaje de alerta
-                        Response.Write("<script>alert('" + resultado + "');</script>");
-
-                        // Volver a cargar los cursos después de eliminar
-                        ListarCursos();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // Manejo de errores
-                    Response.Write("<script>alert('Error al eliminar curso: " + ex.Message + "');</script>");
-                }
-            }
-        }
         protected void btnAgregarCurso_Click(object sender, EventArgs e)
         {
-            // Aquí puedes redirigir a la página para agregar un nuevo curso, por ejemplo:
             Response.Redirect("AgregarCurso.aspx");
         }
-
     }
 }

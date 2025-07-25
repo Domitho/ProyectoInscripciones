@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Data;
+using System.Text;
 using System.Configuration;
 using Npgsql;
-using System.Web.UI.WebControls;
 
 namespace ProyectoInscripcionesED
 {
@@ -16,91 +15,78 @@ namespace ProyectoInscripcionesED
             }
         }
 
-        // Método para cargar las inscripciones en el GridView
         private void CargarInscripciones()
         {
-            string connectionString = ConfigurationManager.ConnectionStrings["PostgresConnection"].ToString();
-            using (NpgsqlConnection conn = new NpgsqlConnection(connectionString))
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<table id='tblInscripciones' class='table table-hover table-bordered align-middle' style='width:100%'>");
+            sb.Append("<thead class='table-primary'>");
+            sb.Append("<tr>");
+            sb.Append("<th>ID</th>");
+            sb.Append("<th>Usuario</th>");
+            sb.Append("<th>Taller</th>");
+            sb.Append("<th>Estado</th>");
+            sb.Append("<th>Acciones</th>");
+            sb.Append("</tr>");
+            sb.Append("</thead><tbody>");
+
+            string connStr = ConfigurationManager.ConnectionStrings["PostgresConnection"].ConnectionString;
+
+            using (var conn = new NpgsqlConnection(connStr))
             {
-                conn.Open();
-
-                string sql = "SELECT i.id, i.usuario_id, i.taller_id, i.estado, u.nombres AS usuario_nombre, t.nombre AS taller_nombre " +
-                             "FROM inscripcion i " +
-                             "JOIN usuario u ON i.usuario_id = u.id " +
-                             "JOIN taller t ON i.taller_id = t.id";
-
-                using (NpgsqlCommand cmd = new NpgsqlCommand(sql, conn))
+                try
                 {
-                    using (NpgsqlDataReader reader = cmd.ExecuteReader())
-                    {
-                        DataTable dt = new DataTable();
-                        dt.Load(reader);
+                    conn.Open();
+                    string sql = @"
+                        SELECT i.id,
+                               u.nombres AS usuario_nombre,
+                               t.nombre AS taller_nombre,
+                               i.estado
+                        FROM inscripcion i
+                        JOIN usuario u ON i.usuario_id = u.id
+                        JOIN taller t ON i.taller_id = t.id
+                        ORDER BY i.id";
 
-                        // Vinculamos los datos al GridView
-                        gvInscripciones.DataSource = dt;
-                        gvInscripciones.DataBind();
+                    using (var cmd = new NpgsqlCommand(sql, conn))
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        if (reader.HasRows)
+                        {
+                            while (reader.Read())
+                            {
+                                int id = Convert.ToInt32(reader["id"]);
+                                string estado = reader["estado"].ToString();
+
+                                sb.Append("<tr>");
+                                sb.Append($"<td>{id}</td>");
+                                sb.Append($"<td>{reader["usuario_nombre"]}</td>");
+                                sb.Append($"<td>{reader["taller_nombre"]}</td>");
+                                sb.Append($"<td><span class='badge {(estado == "Activo" ? "bg-success" : "bg-secondary")}'>{estado}</span></td>");
+                                sb.Append("<td>");
+                                sb.Append($"<a href='EditarInscripcion.aspx?id={id}' class='btn btn-sm btn-outline-warning'>✏️ Editar</a> ");
+                                sb.Append($"<a href='EliminarInscripcion.aspx?id={id}' class='btn btn-sm btn-outline-danger' onclick=\"return confirm('¿Eliminar esta inscripción?')\">🗑️ Eliminar</a>");
+                                sb.Append("</td>");
+                                sb.Append("</tr>");
+                            }
+                        }
+                        else
+                        {
+                            sb.Append("<tr><td colspan='5' class='text-center text-muted'>No se encontraron inscripciones.</td></tr>");
+                        }
                     }
                 }
-            }
-        }
-
-        // Manejo del comando de ver detalles
-        protected void gvInscripciones_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            // Obtener el ID de la inscripción desde el CommandArgument
-            int idInscripcion = Convert.ToInt32(e.CommandArgument);
-
-            if (e.CommandName == "Detalles")
-            {
-                // Redirigir a la página de detalles con el ID de la inscripción
-                Response.Redirect("DetallesInscripcion.aspx?id=" + idInscripcion);
-            }
-            else if (e.CommandName == "Editar")
-            {
-                // Redirigir a la página de edición con el ID de la inscripción
-                Response.Redirect("EditarInscripcion.aspx?id=" + idInscripcion);
-            }
-            else if (e.CommandName == "Eliminar")
-            {
-                // Eliminar la inscripción de la base de datos
-                EliminarInscripcion(idInscripcion);
-            }
-        }
-
-        private void EliminarInscripcion(int idInscripcion)
-        {
-            string connectionString = ConfigurationManager.ConnectionStrings["PostgresConnection"].ToString();
-
-            using (NpgsqlConnection conn = new NpgsqlConnection(connectionString))
-            {
-                conn.Open();
-
-                string sql = "DELETE FROM inscripcion WHERE id = @idInscripcion";
-
-                using (NpgsqlCommand cmd = new NpgsqlCommand(sql, conn))
+                catch (Exception ex)
                 {
-                    cmd.Parameters.AddWithValue("idInscripcion", idInscripcion);
-                    int rowsAffected = cmd.ExecuteNonQuery();
-
-                    if (rowsAffected > 0)
-                    {
-                        lblMensaje.Text = "Inscripción eliminada correctamente.";
-                        lblMensaje.ForeColor = System.Drawing.Color.Green;
-                        CargarInscripciones(); // Recargar las inscripciones
-                    }
-                    else
-                    {
-                        lblMensaje.Text = "No se pudo eliminar la inscripción. Intente de nuevo.";
-                        lblMensaje.ForeColor = System.Drawing.Color.Red;
-                    }
+                    sb.Append($"<tr><td colspan='5' class='text-center text-danger'>Error: {ex.Message}</td></tr>");
                 }
             }
+
+            sb.Append("</tbody></table>");
+            ltTabla.Text = sb.ToString();
         }
+
         protected void btnAgregar_Click(object sender, EventArgs e)
         {
-            // Aquí puedes redirigir a una página para agregar una nueva inscripción, por ejemplo:
             Response.Redirect("AgregarInscripcion.aspx");
         }
-
     }
 }

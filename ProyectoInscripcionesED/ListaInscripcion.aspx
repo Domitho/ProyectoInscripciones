@@ -1,36 +1,55 @@
-﻿<%@ Page Title="Lista de Inscripciones" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="ListaInscripcion.aspx.cs" Inherits="ProyectoInscripcionesED.ListaInscripcion" %>
+﻿<%@ Page Title="Lista de Inscripciones" Language="C#" MasterPageFile="~/Site.Master"
+    AutoEventWireup="true" CodeBehind="ListaInscripcion.aspx.cs"
+    Inherits="ProyectoInscripcionesED.ListaInscripcion" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-    <h2>Lista de Inscripciones</h2>
 
-    <form id="formListaInscripciones" runat="server">
-        <!-- Label para mostrar los mensajes -->
-        <asp:Label ID="lblMensaje" runat="server" ForeColor="Green"></asp:Label><br />
+    <!-- CSS DataTables -->
+    <link rel="stylesheet"
+          href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
 
-        <!-- Botón para agregar nueva inscripción -->
-        <asp:Button ID="btnAgregar" runat="server" Text="Agregar Inscripción" CssClass="btn btn-success mb-3" OnClick="btnAgregar_Click" />
+    <div class="container-fluid">
+        <div class="card shadow-sm mt-4">
+            <div class="card-header bg-primary text-white">
+                <h3 class="mb-0">📋 Lista de Inscripciones</h3>
+            </div>
+            <div class="card-body">
+                <!-- Mensaje -->
+                <asp:Label ID="lblMensaje" runat="server" ForeColor="Green" CssClass="mb-2 d-block"></asp:Label>
 
-        <!-- GridView para mostrar las inscripciones -->
-        <asp:GridView ID="gvInscripciones" runat="server" AutoGenerateColumns="False" CssClass="table table-bordered" OnRowCommand="gvInscripciones_RowCommand">
-            <Columns>
-                <asp:BoundField DataField="id" HeaderText="ID" SortExpression="id" />
-                <asp:BoundField DataField="usuario_id" HeaderText="ID Usuario" SortExpression="usuario_id" />
-                <asp:BoundField DataField="taller_id" HeaderText="ID Taller" SortExpression="taller_id" />
-                <asp:BoundField DataField="estado" HeaderText="Estado" SortExpression="estado" />
-                
-                <asp:TemplateField HeaderText="Acciones">
-                    <ItemTemplate>
-                        &nbsp; <!-- Espaciado entre botones -->
+              
+                <form runat="server">
+                    <div class="mb-3">
+                        <asp:Button ID="btnAgregar" runat="server"
+                                    Text="➕ Agregar Inscripción"
+                                    CssClass="btn btn-success"
+                                    OnClick="btnAgregar_Click" />
+                    </div>
 
-                        <!-- Editar -->
-                        <asp:LinkButton ID="btnEditar" runat="server" CommandName="Editar" CommandArgument='<%# Eval("id") %>' Text="Editar" CssClass="btn btn-warning btn-sm" />
+                    <!-- Tabla HTML para DataTables -->
+                    <asp:Literal ID="ltTabla" runat="server"></asp:Literal>
+                </form>
+            </div>
+        </div>
+    </div>
 
-                        &nbsp; <!-- Espaciado entre botones -->
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
 
-                        <!-- Eliminar -->
-                        <asp:LinkButton ID="btnEliminar" runat="server" CommandName="Eliminar" CommandArgument='<%# Eval("id") %>' Text="Eliminar" CssClass="btn btn-danger btn-sm" OnClientClick="return confirm('¿Está seguro de que desea eliminar esta inscripción?');" />
-                    </ItemTemplate>
-                </asp:TemplateField>
-            </Columns>
-        </asp:GridView>
-    </form>
+    <script>
+        $(function () {
+            $('#tblInscripciones').DataTable({
+                paging: true,
+                pageLength: 20,
+                searching: true,
+                order: [[0, 'asc']],
+                language: {
+                    url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
+                }
+            });
+        });
+    </script>
+
 </asp:Content>
