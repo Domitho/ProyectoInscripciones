@@ -37,8 +37,14 @@ namespace ProyectoInscripcionesED
                 using (NpgsqlCommand cmd = new NpgsqlCommand(sql, conn))
                 using (NpgsqlDataReader reader = cmd.ExecuteReader())
                 {
-                    sb.Append("<table id='tblCertificados' class='table table-striped table-bordered' style='width:100%'>");
-                    sb.Append("<thead><tr><th>ID</th><th>Usuario</th><th>Curso</th><th>Acciones</th></tr></thead><tbody>");
+                    sb.Append("<table id='tblCertificados' class='table table-hover table-bordered align-middle' style='width:100%'>");
+                    sb.Append("<thead class='table-primary'>");
+                    sb.Append("<tr>");
+                    sb.Append("<th>ID</th>");
+                    sb.Append("<th>Usuario</th>");
+                    sb.Append("<th>Curso</th>");
+                    sb.Append("<th>Acciones</th>");
+                    sb.Append("</tr></thead><tbody>");
 
                     while (reader.Read())
                     {
@@ -49,8 +55,8 @@ namespace ProyectoInscripcionesED
                         sb.Append($"<td>{reader["usuario_nombre"]}</td>");
                         sb.Append($"<td>{reader["curso_nombre"]}</td>");
                         sb.Append("<td>");
-                        sb.Append($"<a href='EditarCertificado.aspx?id={id}' class='btn btn-warning btn-sm'>Editar</a>&nbsp;");
-                        sb.Append($"<a href='EliminarCertificado.aspx?id={id}' class='btn btn-danger btn-sm' onclick=\"return confirm('¿Está seguro de eliminar?')\">Eliminar</a>");
+                        sb.Append($"<a href='EditarCertificado.aspx?id={id}' class='btn btn-sm btn-outline-warning'>✏️ Editar</a> ");
+                        sb.Append($"<a href='EliminarCertificado.aspx?id={id}' class='btn btn-sm btn-outline-danger' onclick=\"return confirm('¿Está seguro de eliminar?')\">🗑️ Eliminar</a>");
                         sb.Append("</td>");
                         sb.Append("</tr>");
                     }

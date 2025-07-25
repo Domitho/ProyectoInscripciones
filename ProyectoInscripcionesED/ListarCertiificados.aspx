@@ -8,19 +8,29 @@
     <link rel="stylesheet"
           href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
 
-    <h2 class="my-4">Lista de Certificados</h2>
+    <div class="container-fluid">
+        <div class="card shadow-lg mt-4">
+            <div class="card-header bg-gradient-primary text-white">
+                <h3 class="mb-0">🎓 Lista de Certificados</h3>
+            </div>
+            <div class="card-body">
+                <!-- Mensaje -->
+                <asp:Label ID="lblMensaje" runat="server" ForeColor="Green" CssClass="mb-2 d-block"></asp:Label>
 
-    <form runat="server">
-        <asp:Label ID="lblMensaje" runat="server" ForeColor="Green"></asp:Label><br />
+                <form runat="server">
+                    <div class="mb-3">
+                        <asp:Button ID="btnAgregarCertificado" runat="server"
+                                    Text="➕ Agregar Certificado"
+                                    CssClass="btn btn-success"
+                                    OnClick="btnAgregarCertificado_Click" />
+                    </div>
 
-        <asp:Button ID="btnAgregarCertificado" runat="server"
-                    Text="Agregar Certificado"
-                    CssClass="btn btn-success mb-3"
-                    OnClick="btnAgregarCertificado_Click" />
-
-        <!-- Literal donde inyectamos las filas -->
-        <asp:Literal ID="ltFilas" runat="server"></asp:Literal>
-    </form>
+                    <!-- Tabla HTML con DataTables -->
+                    <asp:Literal ID="ltFilas" runat="server"></asp:Literal>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>

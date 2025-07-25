@@ -18,8 +18,17 @@ namespace ProyectoInscripcionesED
         private void ListarCursos()
         {
             StringBuilder sb = new StringBuilder();
-            sb.Append("<table id='tblCursos' class='table table-striped table-bordered' style='width:100%'>");
-            sb.Append("<thead><tr><th>ID</th><th>Nombre</th><th>Descripción</th><th>Fecha Inicio</th><th>Fecha Fin</th><th>Horas Mínimas</th><th>Acciones</th></tr></thead><tbody>");
+            sb.Append("<table id='tblCursos' class='table table-hover table-bordered align-middle' style='width:100%'>");
+            sb.Append("<thead class='table-primary'>");
+            sb.Append("<tr>");
+            sb.Append("<th>ID</th>");
+            sb.Append("<th>Nombre</th>");
+            sb.Append("<th>Descripción</th>");
+            sb.Append("<th>Fecha Inicio</th>");
+            sb.Append("<th>Fecha Fin</th>");
+            sb.Append("<th>Horas Mínimas</th>");
+            sb.Append("<th>Acciones</th>");
+            sb.Append("</tr></thead><tbody>");
 
             string connStr = ConfigurationManager.ConnectionStrings["PostgresConnection"].ConnectionString;
 
@@ -45,21 +54,21 @@ namespace ProyectoInscripcionesED
                                 sb.Append($"<td>{reader["fecha_fin"]}</td>");
                                 sb.Append($"<td>{reader["horas_minimas"]}</td>");
                                 sb.Append("<td>");
-                                sb.Append($"<a href='EditarCurso.aspx?cursoId={cursoId}' class='btn btn-warning btn-sm'>Editar</a>&nbsp;");
-                                sb.Append($"<a href='EliminarCurso.aspx?cursoId={cursoId}' class='btn btn-danger btn-sm' onclick=\"return confirm('¿Eliminar este curso?')\">Eliminar</a>");
+                                sb.Append($"<a href='EditarCurso.aspx?cursoId={cursoId}' class='btn btn-sm btn-outline-warning'>✏️ Editar</a> ");
+                                sb.Append($"<a href='EliminarCurso.aspx?cursoId={cursoId}' class='btn btn-sm btn-outline-danger' onclick=\"return confirm('¿Eliminar este curso?')\">🗑️ Eliminar</a>");
                                 sb.Append("</td>");
                                 sb.Append("</tr>");
                             }
                         }
                         else
                         {
-                            sb.Append("<tr><td colspan='7' class='text-center'>No se han encontrado cursos.</td></tr>");
+                            sb.Append("<tr><td colspan='7' class='text-center text-muted'>No se han encontrado cursos.</td></tr>");
                         }
                     }
                 }
                 catch (Exception ex)
                 {
-                    sb.Append($"<tr><td colspan='7' class='text-danger text-center'>Error al listar cursos: {ex.Message}</td></tr>");
+                    sb.Append($"<tr><td colspan='7' class='text-center text-danger'>Error al listar cursos: {ex.Message}</td></tr>");
                 }
             }
 

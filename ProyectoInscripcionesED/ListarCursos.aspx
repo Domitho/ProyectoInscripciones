@@ -8,19 +8,29 @@
     <link rel="stylesheet"
           href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
 
-    <h2 class="my-4">Lista de Cursos</h2>
+    <div class="container-fluid">
+        <div class="card shadow-lg mt-4">
+            <div class="card-header bg-gradient-primary text-white">
+                <h3 class="mb-0">📚 Lista de Cursos</h3>
+            </div>
+            <div class="card-body">
+                <!-- Mensaje -->
+                <asp:Label ID="lblMensaje" runat="server" ForeColor="Green" CssClass="mb-2 d-block"></asp:Label>
 
-    <asp:Label ID="lblMensaje" runat="server" ForeColor="Green"></asp:Label><br />
+                <form runat="server">
+                    <div class="mb-3">
+                        <asp:Button ID="btnAgregarCurso" runat="server"
+                                    Text="➕ Agregar Curso"
+                                    CssClass="btn btn-success"
+                                    OnClick="btnAgregarCurso_Click" />
+                    </div>
 
-    <form runat="server">
-        <asp:Button ID="btnAgregarCurso" runat="server"
-                    Text="➕ Agregar Curso"
-                    CssClass="btn btn-success mb-3"
-                    OnClick="btnAgregarCurso_Click" />
-
-        <!-- Tabla HTML para DataTables -->
-        <asp:Literal ID="ltTabla" runat="server"></asp:Literal>
-    </form>
+                    <!-- Tabla HTML con DataTables -->
+                    <asp:Literal ID="ltTabla" runat="server"></asp:Literal>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
